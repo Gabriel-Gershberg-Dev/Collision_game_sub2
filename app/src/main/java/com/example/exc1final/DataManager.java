@@ -1,12 +1,19 @@
 package com.example.exc1final;
 
+import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
 
 public class DataManager {
-    public static  ArrayList<ArrayList<PicObject>> BuildGrid(int rows, int col){
+    private static Context context;
+
+    public DataManager setContext(Context context) {
+        this.context = context;
+        return this;
+    }
+    public static ArrayList<ArrayList<PicObject>> BuildGrid(int rows, int col){
         ArrayList<ArrayList<PicObject>> grid = new ArrayList<>();
         for (int i = 0; i <rows ; i++) {
             grid.add(new ArrayList());
@@ -21,6 +28,7 @@ public class DataManager {
         }
         return grid;
     }
+
 
 
 }

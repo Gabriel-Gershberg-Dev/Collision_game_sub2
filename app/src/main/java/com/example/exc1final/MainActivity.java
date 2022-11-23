@@ -3,6 +3,7 @@ package com.example.exc1final;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
 
+import android.content.Context;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<ArrayList<View>> viewsArray;
     private int DELAY = 1000;
     private Timer timer;
+    private Context context;
 
 
     @Override
@@ -39,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
         gameInit();
+        
 
 
         game_BTN_Right.setOnClickListener(new View.OnClickListener() {
@@ -69,11 +72,17 @@ public class MainActivity extends AppCompatActivity {
     }
     @Override
     public void onResume() {
-        super.onPause();
+        super.onResume();
         if(timer==null)
             startTimer();
 
     }
+
+
+//save the context received via constructor in a local variable
+
+
+
 
     private void clicked(GameManager.Direction direction) {
         int row = game.getObjects().size() - 1;

@@ -1,5 +1,6 @@
 package com.example.exc1final;
 
+import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -9,6 +10,13 @@ public class PicObject {
     public enum Type {CAR,ROCK,FIRE}
     ImageView imageRes;
     private  Type type;
+    private Context context;
+
+        public PicObject(Context context){
+            this.context=context;
+
+
+    }
 
 
 
@@ -18,6 +26,10 @@ public class PicObject {
 
     public PicObject setImageRes(ImageView imageRes) {
         this.imageRes = imageRes;
+        return this;
+    }
+    public PicObject setContext(Context context) {
+        this.context = context;
         return this;
     }
     public void setImage(){
