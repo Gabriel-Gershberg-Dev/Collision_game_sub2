@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<View> hearts;
     ArrayList<ArrayList<View>> viewsArray;
     private int DELAY = 1000;
-    private Timer timer = new Timer();
+    private Timer timer;
 
 
     @Override
@@ -58,6 +58,20 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+    }
+    @Override
+    public void onStop() {
+        super.onStop();
+            timer.cancel();
+            timer=null;
+
+    }
+    @Override
+    public void onResume() {
+        super.onPause();
+        if(timer==null)
+            startTimer();
 
     }
 

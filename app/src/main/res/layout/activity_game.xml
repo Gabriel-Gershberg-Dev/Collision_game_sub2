@@ -172,41 +172,7 @@
                 app:srcCompat="@drawable/ic_launcher_background" />
 
         </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="horizontal"
 
-            >
-
-
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/game_IMG_13"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:scaleType="fitCenter"
-                android:layout_margin="10dp"
-                app:srcCompat="@drawable/ic_launcher_background" />
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/game_IMG_14"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:scaleType="fitCenter"
-                android:layout_margin="10dp"
-                app:srcCompat="@drawable/ic_launcher_background" />
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/game_IMG_15"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:scaleType="fitCenter"
-                android:layout_margin="10dp"
-                app:srcCompat="@drawable/ic_launcher_background" />
-
-        </LinearLayout>
     </LinearLayout>
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/main_FAB1_Left"
@@ -215,7 +181,7 @@
         android:layout_alignParentBottom="true"
         android:layout_margin="16dp"
         android:src="@drawable/ic_left_arrow"
-        android:background="#B20934B6">
+        android:backgroundTint="#2196F3">
 
     </com.google.android.material.floatingactionbutton.FloatingActionButton>
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -225,8 +191,9 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_margin="16dp"
+        android:layout_marginRight="100dp"
         android:src="@drawable/ic_right_arrow"
-        android:backgroundTint="#009688">
+        android:backgroundTint="#2196F3">
 
 
     </com.google.android.material.floatingactionbutton.FloatingActionButton>
