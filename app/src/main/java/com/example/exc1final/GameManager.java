@@ -1,7 +1,5 @@
 package com.example.exc1final;
 
-import android.content.Context;
-
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
@@ -15,17 +13,13 @@ public class GameManager {
     private Direction direction;
     private int numOfRocks=0;
     private ArrayList<ArrayList<PicObject>> objects;
-    private Context context;
 
 
-    public GameManager setContext(Context context) {
-        this.context = context;
-        return this;
-    }
+
     public GameManager(int life, int gridRows, int gridCols, int numOfRocks) {
         this.life = life;
         this.numOfRocks=numOfRocks;
-
+        objects = DataManager.BuildGrid(gridRows,gridCols);
     }
     public void buildNewRoundGrid(){
         objects = DataManager.BuildGrid(objects.size(),objects.get(0).size());
