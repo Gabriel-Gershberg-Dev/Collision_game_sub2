@@ -162,10 +162,16 @@ public class MainActivity extends AppCompatActivity {
 
     private void onCollision(int collisionRow, int collisionCol) {
         game.setWrong(game.getWrong() + 1);
-        for (int h = 0; h < game.getWrong(); h++)
-            hearts.get(h).setVisibility(View.INVISIBLE);
+        if(game.isLose()) {
+            toast("Game over!!!");
+            timer.cancel();
+            this.finish();
+        }
+        for (int h =0; h < game.getWrong(); h++)
+            hearts.get(hearts.size()-1-h).setVisibility(View.INVISIBLE);
         vibrate();
-        toast("fuc****!!!!");
+        if(game.getWrong()<hearts.size()-1)
+         toast("fuc****!!!!");
         makeVoice(true);
         initRound();
 
@@ -229,7 +235,7 @@ public class MainActivity extends AppCompatActivity {
     }
     private void vibrate(){
         Vibrator v = (Vibrator) getSystemService(this.VIBRATOR_SERVICE);
-        v.vibrate(400);
+        v.vibrate(200);
     }
     private void toast(String s){
         Toast.makeText(this, s,
@@ -244,7 +250,7 @@ public class MainActivity extends AppCompatActivity {
             for (int j = 0; j < game.getObjects().get(i).size(); j++) {
                 if (b[i][j] == true) {
                     game.move(d, i, j);
-                    if (game.checkCollision(i, j)) {
+                    if (game.checkCollision(i, j) ) {
                         onCollision(i, j);
                         break;
                     }

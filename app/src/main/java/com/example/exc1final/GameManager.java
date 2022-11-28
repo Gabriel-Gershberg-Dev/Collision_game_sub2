@@ -120,14 +120,15 @@ public class GameManager {
                 }
                 break;
             case RIGHT:
-                if (viewCol + 1 < objects.get(viewCol).size()) {
+                if (viewCol + 1 < objects.get(viewCol).size() && objects.get(viewRow).get(viewCol).getType()== objects.get(viewRow).get(viewCol + 1).getType()) {
                     objects.get(viewRow).get(viewCol).setIsOn(false);
                     objects.get(viewRow).get(viewCol + 1).setIsOn(true);
                 }
 
                 break;
             case LEFT:
-                if (viewCol - 1 >= 0) {
+                if (viewCol - 1 >= 0 && objects.get(viewRow).get(viewCol).getType()== objects.get(viewRow).get(viewCol - 1).getType()) {
+
                     objects.get(viewRow).get(viewCol).setIsOn(false);
                     objects.get(viewRow).get(viewCol - 1).setIsOn(true);
                 }

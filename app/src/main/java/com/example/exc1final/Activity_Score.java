@@ -14,6 +14,7 @@ public class Activity_Score extends AppCompatActivity {
 
     private MaterialTextView score_LBL_score;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
