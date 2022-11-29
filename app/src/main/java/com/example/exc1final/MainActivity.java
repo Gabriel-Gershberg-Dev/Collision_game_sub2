@@ -28,60 +28,39 @@ public class MainActivity extends AppCompatActivity {
     private FloatingActionButton game_BTN_Right;
     private FloatingActionButton game_BTN_Left;
     private GameManager game;
-    GameManager.Direction direction;
     private ArrayList<View> hearts;
     ArrayList<ArrayList<View>> viewsArray;
     private int DELAY = 1000;
     private Timer timer;
-    private Context context;
+    private final int NUM_OF_ROCKS = 2;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+
         gameInit();
-        
-
-
-        game_BTN_Right.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                clicked(GameManager.Direction.RIGHT);
-
-
-            }
-        });
-
-        game_BTN_Left.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                clicked(GameManager.Direction.LEFT);
-            }
-        });
-
+        game_BTN_Right.setOnClickListener(v -> clicked(GameManager.Direction.RIGHT));
+        game_BTN_Left.setOnClickListener(v -> clicked(GameManager.Direction.LEFT));
 
     }
+
     @Override
     public void onStop() {
         super.onStop();
-            timer.cancel();
-            timer=null;
+        timer.cancel();
+        timer = null;
 
     }
+
     @Override
     public void onResume() {
         super.onResume();
-        if(timer==null)
+        if (timer == null)
             startTimer();
 
     }
-
-
-//save the context received via constructor in a local variable
-
-
 
 
     private void clicked(GameManager.Direction direction) {
@@ -162,17 +141,17 @@ public class MainActivity extends AppCompatActivity {
 
     private void onCollision(int collisionRow, int collisionCol) {
         game.setWrong(game.getWrong() + 1);
-        if(game.isLose()) {
+        if (game.isLose()) {
             toast("Game over!!!");
             timer.cancel();
             this.finish();
         }
-        for (int h =0; h < game.getWrong(); h++)
-            hearts.get(hearts.size()-1-h).setVisibility(View.INVISIBLE);
+        for (int h = 0; h < game.getWrong(); h++)
+            hearts.get(hearts.size() - 1 - h).setVisibility(View.INVISIBLE);
         vibrate();
-        if(game.getWrong()<hearts.size()-1)
-         toast("fuc****!!!!");
-        makeVoice(true);
+        if (game.getWrong() < hearts.size() - 1)
+            toast("Oops!");
+        makeVoice(R.raw.explosion);
         initRound();
 
     }
@@ -186,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
     private void initRound() {
         game.buildNewRoundGrid();
         initViewsGrid(game.getObjects());
-        game.initialState(2);
+        game.initialState(NUM_OF_ROCKS);
         setInitialCar();
 
     }
@@ -194,11 +173,11 @@ public class MainActivity extends AppCompatActivity {
     private void gameInit() {
 
         findAllViews();
-        game = new GameManager(hearts.size(), viewsArray.size(), viewsArray.get(0).size(), 2);
+        game = new GameManager(hearts.size(), viewsArray.size(), viewsArray.get(0).size());
         initViewsGrid(game.getObjects());
         initBackground();
         initHeatsView();
-        game.initialState(2);
+        game.initialState(NUM_OF_ROCKS);
         setInitialCar();
         startTimer();
 
@@ -212,32 +191,27 @@ public class MainActivity extends AppCompatActivity {
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                runOnUiThread(new Runnable() {
-                    public void run() {
-                        gameProcess();
-
-
-                    }
-                });
+                runOnUiThread(() -> gameProcess());
             }
         }, DELAY, DELAY);
 
 
     }
 
-    private void makeVoice(boolean answer) {
+    private void makeVoice(int voiceFile) {
         final MediaPlayer mp;
-        if (answer) {
-            mp = MediaPlayer.create(this, R.raw.explosion);
-            mp.start();
-        }
+        mp = MediaPlayer.create(this, voiceFile);
+        mp.start();
+
 
     }
-    private void vibrate(){
+
+    private void vibrate() {
         Vibrator v = (Vibrator) getSystemService(this.VIBRATOR_SERVICE);
         v.vibrate(200);
     }
-    private void toast(String s){
+
+    private void toast(String s) {
         Toast.makeText(this, s,
                 Toast.LENGTH_LONG).show();
     }
@@ -250,7 +224,7 @@ public class MainActivity extends AppCompatActivity {
             for (int j = 0; j < game.getObjects().get(i).size(); j++) {
                 if (b[i][j] == true) {
                     game.move(d, i, j);
-                    if (game.checkCollision(i, j) ) {
+                    if (game.checkCollision(i, j)) {
                         onCollision(i, j);
                         break;
                     }
