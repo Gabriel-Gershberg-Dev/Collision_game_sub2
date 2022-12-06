@@ -1,13 +1,14 @@
-package com.example.exc1final;
+package com.example.exc2final;
 
-import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
+
+import com.example.exc1final.R;
 
 public class PicObject {
 
 
-    public enum Type {CAR, ROCK}
+    public enum Type {CAR, ROCK, COIN}
 
     ImageView imageRes;
     private Type type;
@@ -27,6 +28,8 @@ public class PicObject {
         if (type == Type.CAR)
             imageRes.setImageResource(R.drawable.ic_submarine);
         if (type == Type.ROCK)
+            imageRes.setImageResource(R.drawable.ic_bomb);
+        if (type == Type.COIN)
             imageRes.setImageResource(R.drawable.ic_bomb);
 
 

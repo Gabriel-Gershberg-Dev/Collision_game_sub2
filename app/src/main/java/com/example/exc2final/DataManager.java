@@ -1,8 +1,4 @@
-package com.example.exc1final;
-
-import android.content.Context;
-import android.view.View;
-import android.widget.ImageView;
+package com.example.exc2final;
 
 import java.util.ArrayList;
 

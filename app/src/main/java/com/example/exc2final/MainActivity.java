@@ -1,20 +1,18 @@
-package com.example.exc1final;
+package com.example.exc2final;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
 
-import android.content.Context;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.os.Vibrator;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.exc1final.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.imageview.ShapeableImageView;
 
@@ -178,7 +176,6 @@ public class MainActivity extends AppCompatActivity {
         initBackground();
         initHeatsView();
         game.initialState(NUM_OF_ROCKS);
-        setInitialCar();
         startTimer();
 
 

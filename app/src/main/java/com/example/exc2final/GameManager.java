@@ -1,4 +1,4 @@
-package com.example.exc1final;
+package com.example.exc2final;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -49,6 +49,8 @@ public class GameManager {
             if (objects.get(randomNumRow).get(randomNumCol).getIsOn() == true)
                 continue;
             else {
+                objects.get(randomNumRow).get(randomNumCol).setType(PicObject.Type.ROCK);
+                objects.get(randomNumRow).get(randomNumCol).setImage();
                 objects.get(randomNumRow).get(randomNumCol).setIsOn(true);
                 flag = true;
             }
