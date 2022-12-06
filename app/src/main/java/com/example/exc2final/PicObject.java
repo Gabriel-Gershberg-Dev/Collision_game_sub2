@@ -3,7 +3,7 @@ package com.example.exc2final;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.example.exc1final.R;
+import com.example.exc2final.R;
 
 public class PicObject {
 
