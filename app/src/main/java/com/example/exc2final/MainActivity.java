@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide;
 import com.example.exc2final.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.imageview.ShapeableImageView;
+import com.google.android.material.textview.MaterialTextView;
 
 import java.util.ArrayList;
 import java.util.Timer;
@@ -25,12 +26,13 @@ public class MainActivity extends AppCompatActivity {
     private AppCompatImageView sea_IMG_background;
     private FloatingActionButton game_BTN_Right;
     private FloatingActionButton game_BTN_Left;
-    private GameManager game;
-    private ArrayList<View> hearts;
+    private MaterialTextView game_TXT_score;
     ArrayList<ArrayList<View>> viewsArray;
+    private ArrayList<View> hearts;
+    private GameManager game;
     private int DELAY = 1000;
     private Timer timer;
-    private final int NUM_OF_ROCKS = 2;
+
 
 
     @Override
@@ -77,24 +79,14 @@ public class MainActivity extends AppCompatActivity {
         int layoutChildren = ((LinearLayout) view).getChildCount();
         ArrayList<View> children = new ArrayList<>();
 
-        for (int i = 0; i < layoutChildren; i++) {
-            View child = ((LinearLayout) view).getChildAt(i);
+        for (int i = 0; i < layoutChildren; i++)
+            children.add((((LinearLayout) view).getChildAt(i)));
 
-            if (child instanceof LinearLayout)
-                children.add((LinearLayout) (((LinearLayout) view).getChildAt(i)));
-
-            else if (child instanceof ImageView)
-                children.add((ImageView) (((LinearLayout) view).getChildAt(i)));
-        }
         return children;
     }
-
-
     private ArrayList<ArrayList<View>> findGridViews() {
-
-        LinearLayout layout = (LinearLayout) findViewById(R.id.main_linearLayout_1);
+        LinearLayout layout =  findViewById(R.id.main_linearLayout_1);
         ArrayList<View> mainLinear = getLinearLayoutChild(layout);
-        ;
         ArrayList<ArrayList<View>> grid = new ArrayList<>();
 
         for (int i = 0; i < getLinearLayoutChild(layout).size(); i++)
@@ -103,13 +95,10 @@ public class MainActivity extends AppCompatActivity {
         return grid;
 
     }
-
-
     private void initViewsGrid(ArrayList<ArrayList<PicObject>> objectsArray) {
         for (int i = 0; i < objectsArray.size(); i++) {
             for (int j = 0; j < objectsArray.get(i).size(); j++) {
-                objectsArray.get(i).get(j).setImageRes((ShapeableImageView) viewsArray.get(i).get(j));
-                objectsArray.get(i).get(j).setImage();
+                objectsArray.get(i).get(j).setImageRes((ShapeableImageView) viewsArray.get(i).get(j)).setImage();
                 objectsArray.get(i).get(j).setIsOn(false);
 
             }
@@ -117,40 +106,56 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
-
     private void findAllViews() {
         viewsArray = findGridViews();
         hearts = getLinearLayoutChild(findViewById(R.id.game_Layout_Hearts));
         game_BTN_Right = findViewById(R.id.main_FAB2_Right);
         game_BTN_Left = findViewById(R.id.main_FAB1_Left);
         sea_IMG_background = findViewById(R.id.sea_IMG_background);
+        game_TXT_score = findViewById(R.id.game_TXT_score);
 
     }
-
     private void initHeatsView() {
         for (int i = 0; i < hearts.size(); i++)
             Glide.with(this).load("https://www.freepngimg.com/download/russia/86808-head-putin-vladimir-of-jaw-president-russia.png").into((ShapeableImageView) hearts.get(i));
     }
-
     private void initBackground() {
 
         Glide.with(this).load("https://wallpapershome.com/images/wallpapers/st-basil-039-s-cathedral-2160x3840-st-basils-cathedral-moscow-russia-red-square-5330.jpg").into((sea_IMG_background));
     }
 
-    private void onCollision(int collisionRow, int collisionCol) {
-        game.setWrong(game.getWrong() + 1);
+
+    private void onTotalLose(){
         if (game.isLose()) {
             toast("Game over!!!");
             timer.cancel();
             this.finish();
         }
+    }
+    private void updateLifeUI(){
         for (int h = 0; h < game.getWrong(); h++)
             hearts.get(hearts.size() - 1 - h).setVisibility(View.INVISIBLE);
-        vibrate();
-        if (game.getWrong() < hearts.size() - 1)
-            toast("Oops!");
-        makeVoice(R.raw.explosion);
-        initRound();
+    }
+
+    private void onCollision(PicObject.Type type) {
+        switch(type){
+            case ROCK:
+                game.setWrong(game.getWrong() + 1);
+                onTotalLose();
+                updateLifeUI();
+                vibrate();
+                if (game.getWrong() < hearts.size() - 1)
+                    toast("Oops!");
+                makeVoice(R.raw.explosion);
+                initRound();
+                break;
+            case COIN:
+                game.addCoinScore();
+                game_TXT_score.setText("Sore: "+ game.getScore());
+                initRound();
+                break;
+        }
+
 
     }
 
@@ -163,27 +168,20 @@ public class MainActivity extends AppCompatActivity {
     private void initRound() {
         game.buildNewRoundGrid();
         initViewsGrid(game.getObjects());
-        game.initialState(NUM_OF_ROCKS);
+        game.initialState();
         setInitialCar();
-
     }
 
     private void gameInit() {
-
         findAllViews();
         game = new GameManager(hearts.size(), viewsArray.size(), viewsArray.get(0).size());
-        initViewsGrid(game.getObjects());
         initBackground();
         initHeatsView();
-        game.initialState(NUM_OF_ROCKS);
+        initRound();
         startTimer();
-
-
     }
 
     private void startTimer() {
-
-
         timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
@@ -191,16 +189,12 @@ public class MainActivity extends AppCompatActivity {
                 runOnUiThread(() -> gameProcess());
             }
         }, DELAY, DELAY);
-
-
     }
 
     private void makeVoice(int voiceFile) {
         final MediaPlayer mp;
         mp = MediaPlayer.create(this, voiceFile);
         mp.start();
-
-
     }
 
     private void vibrate() {
@@ -219,10 +213,10 @@ public class MainActivity extends AppCompatActivity {
         GameManager.Direction d = GameManager.Direction.DOWN;
         for (int i = 0; i < game.getObjects().size() && !collision; i++) {
             for (int j = 0; j < game.getObjects().get(i).size(); j++) {
-                if (b[i][j] == true) {
+                if (b[i][j] == true ) {
                     game.move(d, i, j);
-                    if (game.checkCollision(i, j)) {
-                        onCollision(i, j);
+                    if (game.checkCollision(i, j)!=null) {
+                        onCollision( game.getObjects().get(i).get(j).getType());
                         break;
                     }
 

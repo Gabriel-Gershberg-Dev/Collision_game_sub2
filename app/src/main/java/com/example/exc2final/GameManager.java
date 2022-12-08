@@ -7,10 +7,14 @@ import java.util.concurrent.ThreadLocalRandom;
 public class GameManager {
 
 
+    private  final int COIN_SCORE = 10 ;
     private int wrong = 0;
     private int life;
     public enum Direction {DOWN, RIGHT, LEFT}
     private ArrayList<ArrayList<PicObject>> objects;
+    private int score=0;
+    private final int NUMBER_OF_ROCKS=2;
+    private final int NUMBER_OF_COINS=2;
 
 
     public GameManager(int life, int gridRows, int gridCols) {
@@ -28,16 +32,20 @@ public class GameManager {
     }
 
 
-    public void initialState(int numberOfRocks) {
+    public void initialState() {
         offAllObjects();
-        Random rand = new Random(500);
-        for (int i = 0; i < numberOfRocks; i++) {
-            insertRockToEmpty();
+        for (int i = 0; i < NUMBER_OF_COINS; i++) {
+            insertObjectToEmpty(PicObject.Type.COIN);
 
         }
+        for (int i = 0; i < NUMBER_OF_ROCKS; i++) {
+            insertObjectToEmpty(PicObject.Type.ROCK);
+
+        }
+
     }
 
-    void insertRockToEmpty() {
+    void insertObjectToEmpty(PicObject.Type type) {
         boolean flag = false;
         while (!flag) {
 
@@ -49,8 +57,7 @@ public class GameManager {
             if (objects.get(randomNumRow).get(randomNumCol).getIsOn() == true)
                 continue;
             else {
-                objects.get(randomNumRow).get(randomNumCol).setType(PicObject.Type.ROCK);
-                objects.get(randomNumRow).get(randomNumCol).setImage();
+                objects.get(randomNumRow).get(randomNumCol).setType(type).setImage();
                 objects.get(randomNumRow).get(randomNumCol).setIsOn(true);
                 flag = true;
             }
@@ -67,17 +74,21 @@ public class GameManager {
     }
 
 
-    public boolean checkCollision(int viewRow, int viewCol) {
+    public PicObject.Type checkCollision(int viewRow, int viewCol) {
         boolean[][] b = getCurrentOn();
         if (viewRow == objects.size() - 2 &&
                 (objects.get(viewRow).get(viewCol).getIsOn() && objects.get(viewRow + 1).get(viewCol).getIsOn()) &&
                 objects.get(viewRow).get(viewCol).getType() != objects.get(viewRow + 1).get(viewCol).getType()) {
 
-            return true;
+            return objects.get(viewRow).get(viewCol).getType() ;
         }
 
-        return false;
+        return null;
 
+    }
+
+    public void addCoinScore(){
+        this.score+=COIN_SCORE;
     }
 
     public boolean[][] getCurrentOn() {
@@ -91,25 +102,21 @@ public class GameManager {
     }
 
 
-    public void move(Direction direction, int viewRow, int viewCol) {
+    public void move(Direction direction, int viewRow, int viewCol ) {
 
         switch (direction) {
             case DOWN:
                 if (objects.get(viewRow).get(viewCol).getType() != PicObject.Type.CAR) {
-                    if (viewRow < objects.size() - 2 && !objects.get(viewRow + 1).get(viewCol).getIsOn()) {
+                    if (viewRow <= objects.size() - 2 && !objects.get(viewRow + 1).get(viewCol).getIsOn() && checkCollision(viewRow, viewCol)==null) {
                         objects.get(viewRow).get(viewCol).setIsOn(false);
                         objects.get(viewRow + 1).get(viewCol).setIsOn(true);
+                        objects.get(viewRow + 1).get(viewCol).setType(objects.get(viewRow).get(viewCol).getType()).setImage();
 
-                    } else if (viewRow == objects.size() - 2 && !checkCollision(viewRow, viewCol)) {
-                        objects.get(viewRow + 1).get(viewCol).setType(PicObject.Type.ROCK);
-                        objects.get(viewRow + 1).get(viewCol).setImage();
-                        objects.get(viewRow).get(viewCol).setIsOn(false);
-                        objects.get(viewRow + 1).get(viewCol).setIsOn(true);
                     } else if (viewRow == objects.size() - 1) {
-                        objects.get(viewRow).get(viewCol).setType(PicObject.Type.CAR);
                         objects.get(viewRow).get(viewCol).setIsOn(false);
-                        objects.get(viewRow).get(viewCol).setImage();
-                        insertRockToEmpty();
+                        insertObjectToEmpty( objects.get(viewRow).get(viewCol).getType());
+                        objects.get(viewRow).get(viewCol).setType(PicObject.Type.CAR).setImage();
+
                     }
                 }
                 break;
@@ -122,7 +129,6 @@ public class GameManager {
                 break;
             case LEFT:
                 if (viewCol - 1 >= 0 && objects.get(viewRow).get(viewCol).getType() == objects.get(viewRow).get(viewCol - 1).getType()) {
-
                     objects.get(viewRow).get(viewCol).setIsOn(false);
                     objects.get(viewRow).get(viewCol - 1).setIsOn(true);
                 }
@@ -132,14 +138,12 @@ public class GameManager {
         }
     }
 
+
     public ArrayList<ArrayList<PicObject>> getObjects() {
         return objects;
     }
 
-    public void setSate(int row, int col, boolean state) {
-        objects.get(row).get(col).setIsOn(state);
-    }
-
+    public int getScore(){return score;}
     public boolean isLose() {
         return wrong == life;
     }

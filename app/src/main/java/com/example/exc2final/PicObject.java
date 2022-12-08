@@ -24,13 +24,14 @@ public class PicObject {
     }
 
 
-    public void setImage() {
+    public PicObject setImage() {
         if (type == Type.CAR)
             imageRes.setImageResource(R.drawable.ic_submarine);
         if (type == Type.ROCK)
             imageRes.setImageResource(R.drawable.ic_bomb);
         if (type == Type.COIN)
-            imageRes.setImageResource(R.drawable.ic_bomb);
+            imageRes.setImageResource(R.drawable.ic_coin);
+        return this;
 
 
     }

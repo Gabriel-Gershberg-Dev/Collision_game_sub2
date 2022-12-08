@@ -35,7 +35,6 @@
 
 
             <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/game_IMG_1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_margin="10dp"
@@ -44,7 +43,6 @@
                 app:srcCompat="@drawable/ic_launcher_background" />
 
             <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/game_IMG_2"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -52,7 +50,20 @@
                 android:layout_margin="10dp"
                 app:srcCompat="@drawable/ic_launcher_background" />
             <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/game_IMG_3"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:scaleType="fitCenter"
+                android:layout_margin="10dp"
+                app:srcCompat="@drawable/ic_launcher_background" />
+            <com.google.android.material.imageview.ShapeableImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:scaleType="fitCenter"
+                android:layout_margin="10dp"
+                app:srcCompat="@drawable/ic_launcher_background" />
+            <com.google.android.material.imageview.ShapeableImageView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -65,16 +76,11 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp"
             android:layout_weight="1"
             android:orientation="horizontal">
 
 
             <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/game_IMG_4"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_margin="10dp"
@@ -83,7 +89,6 @@
                 app:srcCompat="@drawable/ic_launcher_background" />
 
             <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/game_IMG_5"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_margin="10dp"
@@ -92,7 +97,6 @@
                 app:srcCompat="@drawable/ic_launcher_background" />
 
             <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/game_IMG_6"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_margin="10dp"
@@ -100,34 +104,14 @@
                 android:scaleType="fitCenter"
                 app:srcCompat="@drawable/ic_launcher_background" />
 
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="horizontal"
-
-            >
-
-
             <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/game_IMG_7"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_margin="10dp"
                 android:layout_weight="1"
                 android:scaleType="fitCenter"
-                android:layout_margin="10dp"
                 app:srcCompat="@drawable/ic_launcher_background" />
             <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/game_IMG_8"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:scaleType="fitCenter"
-                android:layout_margin="10dp"
-                app:srcCompat="@drawable/ic_launcher_background" />
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/game_IMG_9"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -146,7 +130,14 @@
 
 
             <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/game_IMG_10"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:scaleType="fitCenter"
+                android:layout_margin="10dp"
+                app:srcCompat="@drawable/ic_launcher_background" />
+
+            <com.google.android.material.imageview.ShapeableImageView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -154,7 +145,14 @@
                 android:layout_margin="10dp"
                 app:srcCompat="@drawable/ic_launcher_background" />
             <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/game_IMG_11"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:scaleType="fitCenter"
+                android:layout_margin="10dp"
+                app:srcCompat="@drawable/ic_launcher_background" />
+
+            <com.google.android.material.imageview.ShapeableImageView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -162,7 +160,6 @@
                 android:layout_margin="10dp"
                 app:srcCompat="@drawable/ic_launcher_background" />
             <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/game_IMG_12"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -171,6 +168,147 @@
                 app:srcCompat="@drawable/ic_launcher_background" />
 
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+
+            >
+
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:scaleType="fitCenter"
+                android:layout_margin="10dp"
+                app:srcCompat="@drawable/ic_launcher_background" />
+            <com.google.android.material.imageview.ShapeableImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:scaleType="fitCenter"
+                android:layout_margin="10dp"
+                app:srcCompat="@drawable/ic_launcher_background" />
+            <com.google.android.material.imageview.ShapeableImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:scaleType="fitCenter"
+                android:layout_margin="10dp"
+                app:srcCompat="@drawable/ic_launcher_background" />
+            <com.google.android.material.imageview.ShapeableImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:scaleType="fitCenter"
+                android:layout_margin="10dp"
+                app:srcCompat="@drawable/ic_launcher_background" />
+            <com.google.android.material.imageview.ShapeableImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:scaleType="fitCenter"
+                android:layout_margin="10dp"
+                app:srcCompat="@drawable/ic_launcher_background" />
+
+        </LinearLayout>
+        <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+
+        >
+
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:scaleType="fitCenter"
+            android:layout_margin="10dp"
+            app:srcCompat="@drawable/ic_launcher_background" />
+        <com.google.android.material.imageview.ShapeableImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:scaleType="fitCenter"
+            android:layout_margin="10dp"
+            app:srcCompat="@drawable/ic_launcher_background" />
+        <com.google.android.material.imageview.ShapeableImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:scaleType="fitCenter"
+            android:layout_margin="10dp"
+            app:srcCompat="@drawable/ic_launcher_background" />
+        <com.google.android.material.imageview.ShapeableImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:scaleType="fitCenter"
+            android:layout_margin="10dp"
+            app:srcCompat="@drawable/ic_launcher_background" />
+        <com.google.android.material.imageview.ShapeableImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:scaleType="fitCenter"
+            android:layout_margin="10dp"
+            app:srcCompat="@drawable/ic_launcher_background" />
+
+    </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+
+            >
+
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:scaleType="fitCenter"
+                android:layout_margin="10dp"
+                app:srcCompat="@drawable/ic_launcher_background" />
+            <com.google.android.material.imageview.ShapeableImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:scaleType="fitCenter"
+                android:layout_margin="10dp"
+                app:srcCompat="@drawable/ic_launcher_background" />
+            <com.google.android.material.imageview.ShapeableImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:scaleType="fitCenter"
+                android:layout_margin="10dp"
+                app:srcCompat="@drawable/ic_launcher_background" />
+            <com.google.android.material.imageview.ShapeableImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:scaleType="fitCenter"
+                android:layout_margin="10dp"
+                app:srcCompat="@drawable/ic_launcher_background" />
+            <com.google.android.material.imageview.ShapeableImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:scaleType="fitCenter"
+                android:layout_margin="10dp"
+                app:srcCompat="@drawable/ic_launcher_background" />
+
+
+        </LinearLayout>
+
 
     </LinearLayout>
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -230,4 +368,15 @@
 
 
     </LinearLayout>
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/game_TXT_score"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:text="score: 00000"
+        android:textStyle="bold"
+        android:layout_marginTop="16dp">
+
+    </com.google.android.material.textview.MaterialTextView>
 </RelativeLayout>
