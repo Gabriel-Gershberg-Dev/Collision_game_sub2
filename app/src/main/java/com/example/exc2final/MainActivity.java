@@ -3,18 +3,20 @@ package com.example.exc2final;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageView;
 
+import android.content.Intent;
+
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.view.View;
-import android.widget.ImageView;
+
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.exc2final.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.imageview.ShapeableImageView;
+import com.google.android.material.radiobutton.MaterialRadioButton;
 import com.google.android.material.textview.MaterialTextView;
 
 import java.util.ArrayList;
@@ -23,6 +25,8 @@ import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static final String KEY_MODE = "KEY_MODE";
+    public static final String KEY_SPEED = "KEY_SPEED";
     private AppCompatImageView sea_IMG_background;
     private FloatingActionButton game_BTN_Right;
     private FloatingActionButton game_BTN_Left;
@@ -30,8 +34,11 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<ArrayList<View>> viewsArray;
     private ArrayList<View> hearts;
     private GameManager game;
-    private int DELAY = 1000;
+    private int delay = 0;
     private Timer timer;
+    private String modeSelected;
+    private String speedSelected;
+
 
 
 
@@ -39,10 +46,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+        SPV3.init(this);
+        getMenuValues();
 
         gameInit();
-        game_BTN_Right.setOnClickListener(v -> clicked(GameManager.Direction.RIGHT));
-        game_BTN_Left.setOnClickListener(v -> clicked(GameManager.Direction.LEFT));
+
+
+
 
     }
 
@@ -61,8 +71,69 @@ public class MainActivity extends AppCompatActivity {
             startTimer();
 
     }
+    private void getMenuValues(){
+        Intent previousIntent = getIntent();
+        modeSelected= previousIntent.getExtras().getString(KEY_MODE);
+        speedSelected= previousIntent.getExtras().getString(KEY_SPEED);
+    }
 
+    private void openScorePage( int score) {
+        Intent intent = new Intent(this, ScoreActivity.class);
+        intent.putExtra(ScoreActivity.KEY_SCORE,score);
+        startActivity(intent);
+        finish();
+    }
+    private void setButtons(){
+        game_BTN_Right.setVisibility(View.VISIBLE);
+        game_BTN_Left.setVisibility(View.VISIBLE);
+        game_BTN_Right.setOnClickListener(v -> clicked(GameManager.Direction.RIGHT));
+        game_BTN_Left.setOnClickListener(v -> clicked(GameManager.Direction.LEFT));
+    }
 
+    private void setSensor(){
+         SensorMovement.CallBack_steps callBack_steps = new SensorMovement.CallBack_steps() {
+            @Override
+            public void moveLeft() {
+                clicked(GameManager.Direction.LEFT);
+
+            }
+
+            @Override
+            public void moveRight() {
+                clicked(GameManager.Direction.RIGHT);
+            }
+
+        };
+        SensorMovement sensorMovement= new SensorMovement(this,callBack_steps);
+        sensorMovement.start();
+    }
+    private void setSpeed(){
+        switch (speedSelected){
+            case "Slow":
+                delay=2000;
+                break;
+            case "Medium":
+                delay =1000;
+                break;
+            case "High":
+                delay =500;
+                break;
+            default:
+                break;
+        }
+    }
+    private void setMode(){
+        switch (modeSelected){
+            case "Sensor":
+                setSensor();
+                break;
+            case "Buttons":
+                setButtons();
+                break;
+            default:
+                break;
+        }
+    }
     private void clicked(GameManager.Direction direction) {
         int row = game.getObjects().size() - 1;
         int col = 0;
@@ -84,6 +155,7 @@ public class MainActivity extends AppCompatActivity {
 
         return children;
     }
+
     private ArrayList<ArrayList<View>> findGridViews() {
         LinearLayout layout =  findViewById(R.id.main_linearLayout_1);
         ArrayList<View> mainLinear = getLinearLayoutChild(layout);
@@ -95,6 +167,7 @@ public class MainActivity extends AppCompatActivity {
         return grid;
 
     }
+
     private void initViewsGrid(ArrayList<ArrayList<PicObject>> objectsArray) {
         for (int i = 0; i < objectsArray.size(); i++) {
             for (int j = 0; j < objectsArray.get(i).size(); j++) {
@@ -106,6 +179,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
     private void findAllViews() {
         viewsArray = findGridViews();
         hearts = getLinearLayoutChild(findViewById(R.id.game_Layout_Hearts));
@@ -115,10 +189,12 @@ public class MainActivity extends AppCompatActivity {
         game_TXT_score = findViewById(R.id.game_TXT_score);
 
     }
+
     private void initHeatsView() {
         for (int i = 0; i < hearts.size(); i++)
             Glide.with(this).load("https://www.freepngimg.com/download/russia/86808-head-putin-vladimir-of-jaw-president-russia.png").into((ShapeableImageView) hearts.get(i));
     }
+
     private void initBackground() {
 
         Glide.with(this).load("https://wallpapershome.com/images/wallpapers/st-basil-039-s-cathedral-2160x3840-st-basils-cathedral-moscow-russia-red-square-5330.jpg").into((sea_IMG_background));
@@ -129,7 +205,7 @@ public class MainActivity extends AppCompatActivity {
         if (game.isLose()) {
             toast("Game over!!!");
             timer.cancel();
-            this.finish();
+            openScorePage(game.getScore());
         }
     }
     private void updateLifeUI(){
@@ -151,17 +227,20 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case COIN:
                 game.addCoinScore();
-                game_TXT_score.setText("Sore: "+ game.getScore());
+                updateScoreUi();
                 initRound();
                 break;
         }
 
 
     }
-
+private void updateScoreUi(){
+    game_TXT_score.setText("Sore: "+ game.getScore());
+}
 
     private void setInitialCar() {
         game.getObjects().get(game.getObjects().size() - 1).get(0).setIsOn(true);
+
     }
 
 
@@ -170,6 +249,8 @@ public class MainActivity extends AppCompatActivity {
         initViewsGrid(game.getObjects());
         game.initialState();
         setInitialCar();
+
+
     }
 
     private void gameInit() {
@@ -178,6 +259,8 @@ public class MainActivity extends AppCompatActivity {
         initBackground();
         initHeatsView();
         initRound();
+        setMode();
+        setSpeed();
         startTimer();
     }
 
@@ -188,7 +271,7 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 runOnUiThread(() -> gameProcess());
             }
-        }, DELAY, DELAY);
+        }, delay, delay);
     }
 
     private void makeVoice(int voiceFile) {
@@ -207,9 +290,16 @@ public class MainActivity extends AppCompatActivity {
                 Toast.LENGTH_LONG).show();
     }
 
+
+
+
+
+
     private void gameProcess() {
         boolean[][] b = game.getCurrentOn();
         boolean collision = false;
+        game.addTimeScore();
+        updateScoreUi();
         GameManager.Direction d = GameManager.Direction.DOWN;
         for (int i = 0; i < game.getObjects().size() && !collision; i++) {
             for (int j = 0; j < game.getObjects().get(i).size(); j++) {

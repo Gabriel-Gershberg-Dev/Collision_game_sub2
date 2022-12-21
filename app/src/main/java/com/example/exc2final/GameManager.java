@@ -7,7 +7,8 @@ import java.util.concurrent.ThreadLocalRandom;
 public class GameManager {
 
 
-    private  final int COIN_SCORE = 10 ;
+    private  final int COIN_SCORE = 30 ;
+    private final int EVERY_SECOND_SCORE=2;
     private int wrong = 0;
     private int life;
     public enum Direction {DOWN, RIGHT, LEFT}
@@ -89,6 +90,9 @@ public class GameManager {
 
     public void addCoinScore(){
         this.score+=COIN_SCORE;
+    }
+    public void addTimeScore(){
+        this.score+=EVERY_SECOND_SCORE;
     }
 
     public boolean[][] getCurrentOn() {

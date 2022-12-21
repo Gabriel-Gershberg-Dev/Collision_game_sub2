@@ -311,26 +311,36 @@
 
 
     </LinearLayout>
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/main_FAB1_Left"
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:layout_alignParentBottom="true"
-        android:layout_margin="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="#2196F3"
         android:src="@drawable/ic_left_arrow"
-        android:backgroundTint="#2196F3">
+        android:visibility="invisible">
 
     </com.google.android.material.floatingactionbutton.FloatingActionButton>
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/main_FAB2_Right"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_margin="16dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginRight="100dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="#2196F3"
         android:src="@drawable/ic_right_arrow"
-        android:backgroundTint="#2196F3">
+        android:visibility="invisible">
 
 
     </com.google.android.material.floatingactionbutton.FloatingActionButton>
@@ -374,7 +384,7 @@
         android:layout_height="100dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:text="score: 00000"
+        android:text="score: 0"
         android:textStyle="bold"
         android:layout_marginTop="16dp">
 
