@@ -1,20 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#A5E4FD"
-    tools:context=".MainActivity"
-    android:id="@+id/activity_game">
+    tools:context=".ScoreActivity"
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/score_TBL"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="100dp"
-        android:text="1000000000000000000">
+    android:orientation="vertical"
+    android:keepScreenOn="true">
 
-    </com.google.android.material.textview.MaterialTextView>
-</RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/panel_LAY_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+
+
+        android:background="#000000"/>
+
+    <FrameLayout
+        android:id="@+id/panel_LAY_map"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+
+        android:background="#000000"/>
+
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>

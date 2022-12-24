@@ -7,15 +7,17 @@ import java.util.concurrent.ThreadLocalRandom;
 public class GameManager {
 
 
-    private  final int COIN_SCORE = 30 ;
-    private final int EVERY_SECOND_SCORE=2;
+    private final int COIN_SCORE = 30;
+    private final int EVERY_SECOND_SCORE = 2;
     private int wrong = 0;
     private int life;
+
     public enum Direction {DOWN, RIGHT, LEFT}
+
     private ArrayList<ArrayList<PicObject>> objects;
-    private int score=0;
-    private final int NUMBER_OF_ROCKS=2;
-    private final int NUMBER_OF_COINS=2;
+    private int score = 0;
+    private final int NUMBER_OF_ROCKS = 2;
+    private final int NUMBER_OF_COINS = 2;
 
 
     public GameManager(int life, int gridRows, int gridCols) {
@@ -81,18 +83,19 @@ public class GameManager {
                 (objects.get(viewRow).get(viewCol).getIsOn() && objects.get(viewRow + 1).get(viewCol).getIsOn()) &&
                 objects.get(viewRow).get(viewCol).getType() != objects.get(viewRow + 1).get(viewCol).getType()) {
 
-            return objects.get(viewRow).get(viewCol).getType() ;
+            return objects.get(viewRow).get(viewCol).getType();
         }
 
         return null;
 
     }
 
-    public void addCoinScore(){
-        this.score+=COIN_SCORE;
+    public void addCoinScore() {
+        this.score += COIN_SCORE;
     }
-    public void addTimeScore(){
-        this.score+=EVERY_SECOND_SCORE;
+
+    public void addTimeScore() {
+        this.score += EVERY_SECOND_SCORE;
     }
 
     public boolean[][] getCurrentOn() {
@@ -106,19 +109,19 @@ public class GameManager {
     }
 
 
-    public void move(Direction direction, int viewRow, int viewCol ) {
+    public void move(Direction direction, int viewRow, int viewCol) {
 
         switch (direction) {
             case DOWN:
                 if (objects.get(viewRow).get(viewCol).getType() != PicObject.Type.CAR) {
-                    if (viewRow <= objects.size() - 2 && !objects.get(viewRow + 1).get(viewCol).getIsOn() && checkCollision(viewRow, viewCol)==null) {
+                    if (viewRow <= objects.size() - 2 && !objects.get(viewRow + 1).get(viewCol).getIsOn() && checkCollision(viewRow, viewCol) == null) {
                         objects.get(viewRow).get(viewCol).setIsOn(false);
                         objects.get(viewRow + 1).get(viewCol).setIsOn(true);
                         objects.get(viewRow + 1).get(viewCol).setType(objects.get(viewRow).get(viewCol).getType()).setImage();
 
                     } else if (viewRow == objects.size() - 1) {
                         objects.get(viewRow).get(viewCol).setIsOn(false);
-                        insertObjectToEmpty( objects.get(viewRow).get(viewCol).getType());
+                        insertObjectToEmpty(objects.get(viewRow).get(viewCol).getType());
                         objects.get(viewRow).get(viewCol).setType(PicObject.Type.CAR).setImage();
 
                     }
@@ -147,7 +150,10 @@ public class GameManager {
         return objects;
     }
 
-    public int getScore(){return score;}
+    public int getScore() {
+        return score;
+    }
+
     public boolean isLose() {
         return wrong == life;
     }

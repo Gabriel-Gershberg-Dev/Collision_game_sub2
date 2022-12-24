@@ -16,7 +16,6 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.imageview.ShapeableImageView;
-import com.google.android.material.radiobutton.MaterialRadioButton;
 import com.google.android.material.textview.MaterialTextView;
 
 import java.util.ArrayList;
@@ -40,8 +39,6 @@ public class MainActivity extends AppCompatActivity {
     private String speedSelected;
 
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,8 +47,6 @@ public class MainActivity extends AppCompatActivity {
         getMenuValues();
 
         gameInit();
-
-
 
 
     }
@@ -71,27 +66,29 @@ public class MainActivity extends AppCompatActivity {
             startTimer();
 
     }
-    private void getMenuValues(){
+
+    private void getMenuValues() {
         Intent previousIntent = getIntent();
-        modeSelected= previousIntent.getExtras().getString(KEY_MODE);
-        speedSelected= previousIntent.getExtras().getString(KEY_SPEED);
+        modeSelected = previousIntent.getExtras().getString(KEY_MODE);
+        speedSelected = previousIntent.getExtras().getString(KEY_SPEED);
     }
 
-    private void openScorePage( int score) {
+    private void openScorePage(int score) {
         Intent intent = new Intent(this, ScoreActivity.class);
-        intent.putExtra(ScoreActivity.KEY_SCORE,score);
+        intent.putExtra(ScoreActivity.KEY_SCORE, score);
         startActivity(intent);
         finish();
     }
-    private void setButtons(){
+
+    private void setButtons() {
         game_BTN_Right.setVisibility(View.VISIBLE);
         game_BTN_Left.setVisibility(View.VISIBLE);
         game_BTN_Right.setOnClickListener(v -> clicked(GameManager.Direction.RIGHT));
         game_BTN_Left.setOnClickListener(v -> clicked(GameManager.Direction.LEFT));
     }
 
-    private void setSensor(){
-         SensorMovement.CallBack_steps callBack_steps = new SensorMovement.CallBack_steps() {
+    private void setSensor() {
+        SensorMovement.CallBack_steps callBack_steps = new SensorMovement.CallBack_steps() {
             @Override
             public void moveLeft() {
                 clicked(GameManager.Direction.LEFT);
@@ -104,26 +101,28 @@ public class MainActivity extends AppCompatActivity {
             }
 
         };
-        SensorMovement sensorMovement= new SensorMovement(this,callBack_steps);
+        SensorMovement sensorMovement = new SensorMovement(this, callBack_steps);
         sensorMovement.start();
     }
-    private void setSpeed(){
-        switch (speedSelected){
+
+    private void setSpeed() {
+        switch (speedSelected) {
             case "Slow":
-                delay=2000;
+                delay = 2000;
                 break;
             case "Medium":
-                delay =1000;
+                delay = 1000;
                 break;
             case "High":
-                delay =500;
+                delay = 500;
                 break;
             default:
                 break;
         }
     }
-    private void setMode(){
-        switch (modeSelected){
+
+    private void setMode() {
+        switch (modeSelected) {
             case "Sensor":
                 setSensor();
                 break;
@@ -134,6 +133,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
     }
+
     private void clicked(GameManager.Direction direction) {
         int row = game.getObjects().size() - 1;
         int col = 0;
@@ -157,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private ArrayList<ArrayList<View>> findGridViews() {
-        LinearLayout layout =  findViewById(R.id.main_linearLayout_1);
+        LinearLayout layout = findViewById(R.id.main_linearLayout_1);
         ArrayList<View> mainLinear = getLinearLayoutChild(layout);
         ArrayList<ArrayList<View>> grid = new ArrayList<>();
 
@@ -197,24 +197,25 @@ public class MainActivity extends AppCompatActivity {
 
     private void initBackground() {
 
-        Glide.with(this).load("https://wallpapershome.com/images/wallpapers/st-basil-039-s-cathedral-2160x3840-st-basils-cathedral-moscow-russia-red-square-5330.jpg").into((sea_IMG_background));
+        Glide.with(this).load("https://images.hdqwalls.com/download/war-thunder-5k-2017-2h-1125x2436.jpg").into((sea_IMG_background));
     }
 
 
-    private void onTotalLose(){
+    private void onTotalLose() {
         if (game.isLose()) {
             toast("Game over!!!");
             timer.cancel();
             openScorePage(game.getScore());
         }
     }
-    private void updateLifeUI(){
+
+    private void updateLifeUI() {
         for (int h = 0; h < game.getWrong(); h++)
             hearts.get(hearts.size() - 1 - h).setVisibility(View.INVISIBLE);
     }
 
     private void onCollision(PicObject.Type type) {
-        switch(type){
+        switch (type) {
             case ROCK:
                 game.setWrong(game.getWrong() + 1);
                 onTotalLose();
@@ -234,9 +235,10 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-private void updateScoreUi(){
-    game_TXT_score.setText("Sore: "+ game.getScore());
-}
+
+    private void updateScoreUi() {
+        game_TXT_score.setText("Score: " + game.getScore());
+    }
 
     private void setInitialCar() {
         game.getObjects().get(game.getObjects().size() - 1).get(0).setIsOn(true);
@@ -291,10 +293,6 @@ private void updateScoreUi(){
     }
 
 
-
-
-
-
     private void gameProcess() {
         boolean[][] b = game.getCurrentOn();
         boolean collision = false;
@@ -303,10 +301,10 @@ private void updateScoreUi(){
         GameManager.Direction d = GameManager.Direction.DOWN;
         for (int i = 0; i < game.getObjects().size() && !collision; i++) {
             for (int j = 0; j < game.getObjects().get(i).size(); j++) {
-                if (b[i][j] == true ) {
+                if (b[i][j] == true) {
                     game.move(d, i, j);
-                    if (game.checkCollision(i, j)!=null) {
-                        onCollision( game.getObjects().get(i).get(j).getType());
+                    if (game.checkCollision(i, j) != null) {
+                        onCollision(game.getObjects().get(i).get(j).getType());
                         break;
                     }
 

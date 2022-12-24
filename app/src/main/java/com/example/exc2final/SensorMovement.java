@@ -6,21 +6,23 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.util.Log;
+
 import java.lang.Math;
 
 public class SensorMovement {
     public interface CallBack_steps {
 
 
-
         void moveLeft();
+
         void moveRight();
     }
+
     private CallBack_steps callBack_steps;
     private SensorManager mSensorManager;
     private Sensor sensor;
-    private  float previousX=0;
-    private  float previousY=0;
+    private float previousX = 0;
+    private float previousY = 0;
 
     public SensorMovement(Context context, CallBack_steps callBack_steps) {
         mSensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
@@ -28,6 +30,7 @@ public class SensorMovement {
         this.callBack_steps = callBack_steps;
 
     }
+
     /**
      * register to the sensors
      */
@@ -47,9 +50,7 @@ public class SensorMovement {
         public void onSensorChanged(SensorEvent event) {
             float x = event.values[0];
             float y = event.values[1];
-            registerMovement(x,y);
-
-
+            registerMovement(x, y);
 
 
         }
@@ -61,18 +62,17 @@ public class SensorMovement {
     };
 
 
-    public void registerMovement (float x, float y){
-        Log.d( "movement", "x is" +(x));
-        if( (x-previousX)>=1.5) {
+    public void registerMovement(float x, float y) {
+        Log.d("movement", "x is" + (x));
+        if ((x - previousX) >= 1.5) {
             if (callBack_steps != null) {
                 callBack_steps.moveLeft();
-                previousX=x;
+                previousX = x;
             }
-        }
-        else if ((x-previousX)<=-1.5){
+        } else if ((x - previousX) <= -1.5) {
             if (callBack_steps != null) {
                 callBack_steps.moveRight();
-                previousX=x;
+                previousX = x;
             }
         }
     }
